@@ -1,0 +1,12 @@
+{
+  "name": "rlawjdgus051-math",
+  "version": "1.0.0",
+  "description": "",
+  "main": "rlawjdgus051-math.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
