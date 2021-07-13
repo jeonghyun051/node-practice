@@ -13,15 +13,15 @@ const application = express()
     .use(express.urlencoded({extended: true})) // application/x-www-form-urlencoded
     .use(express.json())                       // application/json
     // 3. view engine setup
-    .set('views', path.join(__dirname, 'views'))
+    .set('views', path.join(__dirname, 'views')) // views 경로 설정
     .set('view engine', 'ejs')
     // 4. request router
-    .all('*', function(req, res, next) {
+    .all('*', function(req, res, next) {    // 들어오는 전체경로
         res.locals.req = req;
         res.locals.res = res;
         next();
     })
-    .use('/', guestbookRouter);
+    .use('/', guestbookRouter); // 주소창 / 설정
 
 // Server Setup    
 http.createServer(application)

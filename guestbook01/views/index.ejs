@@ -31,7 +31,7 @@
 			<td><a href="/delete/<%=vo.no%>">삭제</a></td>
 		</tr>
 		<tr>
-			<td colspan=4><%=vo.message%></td>
+			<td colspan=4><%-vo.message.replace(/\n/gi,"<br/>")%></td>
 		</tr>
 	</table>
 	<%

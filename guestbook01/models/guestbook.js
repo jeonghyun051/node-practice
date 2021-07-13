@@ -34,12 +34,12 @@ module.exports = {
             conn.end();
         }
     },
-    delete: async function(no){
+    delete: async function(vo){
         const conn = dbconn();
         const query = util.promisify(conn.query).bind(conn);
         try {
             const results = await 
-            query("delete from guestbook where no=?", no);
+            query("delete from guestbook where no=? and password=?", [vo.no, vo.password]);
             return results;    
         } catch(e) {
             console.error(e);
