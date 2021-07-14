@@ -10,6 +10,7 @@ dotenv.config({path: path.join(__dirname, 'config/db.env')});
 
 const mainRouter = require('./routes/main');
 const userRouter = require('./routes/user');
+const guestbookRouter = require('./routes/guestbook');
 
 // Application Setup
 const application = express()
@@ -36,6 +37,7 @@ const application = express()
     })
     .use('/', mainRouter)
     .use('/user', userRouter)
+    .use('/guestbook', guestbookRouter)
     .use((req, res) => res.render('error/404'));
 
 
