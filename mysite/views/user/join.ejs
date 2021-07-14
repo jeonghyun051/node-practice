@@ -7,7 +7,7 @@
 </head>
 <body>
 	<div id="container">
-		<%-include('../includes/header') %>
+		<%- include('../includes/header') %>
 		<div id="content">
 			<div id="user">
 				<form id="join-form" name="joinForm" method="post" action="/user/join">
@@ -32,14 +32,12 @@
 						<input id="agree-prov" type="checkbox" name="agreeProv" value="y">
 						<label>서비스 약관에 동의합니다.</label>
 					</fieldset>
-					
 					<input type="submit" value="가입하기">
-					
 				</form>
 			</div>
 		</div>
-		<%-include('../includes/navigation') %>
-		<%-include('../includes/footer') %>
+		<%- include('../includes/navigation') %>
+		<%- include('../includes/footer') %>
 	</div>
 </body>
 </html>

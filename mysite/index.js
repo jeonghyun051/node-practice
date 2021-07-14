@@ -1,67 +1,65 @@
-// init
-const { EACCES, EADDRINUSE } = require('constants');
 const express = require('express');
+const session = require('express-session');
 const http = require('http');
 const path = require('path');
 const dotenv = require('dotenv');
-const port = 8080;
 
-// router
+// Environment Variables(환경변수)
+dotenv.config({path: path.join(__dirname, 'config/app.env')});
+dotenv.config({path: path.join(__dirname, 'config/db.env')});
+
 const mainRouter = require('./routes/main');
 const userRouter = require('./routes/user');
 
-
-// Environment Variables(환경변수 관리)
-dotenv.config({
-    path: path.join(__dirname,'config/app.env')
-})
-
-// application setup
+// Application Setup
 const application = express()
-    // 1. static serve
-    .use(express.static(path.join(__dirname,process.env.STATIC_RESOURCES_DIRECTORY)))
-    // 2. request body parser
-    .use(express.urlencoded({extended:true})) // application/x-www-form-urlencoded
-    .use(express.json()) // application/json
-    // 3. view engine setup
-    .set("views",path.join(__dirname,"views"))
-    .set("view engine","ejs")
-    // 4. request router
-        // 모든 method(GET,POST,PUT,DELETE), 모든 url
-    .all('*',function(req,res,next){
+    // 1. static serve 
+    .use(express.static(path.join(__dirname, process.env.STATIC_RESOURCES_DIRECTORY)))
+    // 2. session enviroment
+    .use(session({
+        secret: 'mysite-session', // 쿠키 변조를 방지하기 위한 값
+        resave: false,            // 요청 처리에서 세션의 변경 사항이 없어도 항상 저장
+        saveUninitialized: false  // 새로 세션을 생성할 때 "uninitialized" 상태로 둔다.        
+    }))
+
+    // 3. request body parser
+    .use(express.urlencoded({extended: true})) // application/x-www-form-urlencoded
+    .use(express.json())                       // application/json
+    // 4. view engine setup
+    .set('views', path.join(__dirname, 'views'))
+    .set('view engine', 'ejs')
+    // 5. request router
+    .all('*', function(req, res, next) {
         res.locals.req = req;
         res.locals.res = res;
         next();
     })
-    .use("/",mainRouter)
-    .use("/user",userRouter)
-    .use((req,res) => res.render('error/404')) // 없는 url 처리
-        
+    .use('/', mainRouter)
+    .use('/user', userRouter)
+    .use((req, res) => res.render('error/404'));
 
-// server setup
+
+
+// Server Setup    
 http.createServer(application)
-    .on('listening',function(){
-        console.info(`HTTP server running on port ${process.env.PORT}`);
+    .on('listening', function(){
+        console.info(`Http Server running on port ${process.env.PORT}`);
     })
-    .on('error',function(error){
-        if(error.syscal !== 'listen'){
-            throw error; // node가 처리하도록 함
+    .on('error', function(error){
+        if(error.syscall !== 'listen'){
+            throw error;
         }
-
-        // listener prob
         switch(error.code){
-            // port 못열때
             case 'EACCESS':
-                console.error(`Port: ${process.env.PORT} requires privileges.`);
-                process.exit(1); // 비정상 종료
+                console.error(`Port:${process.env.PORT} requires privileges`);
+                process.exit(1);
                 break;
-            // 서버 또 열때
             case 'EADDRINUSE':
-                console.error(`Port: ${process.env.PORT} is already used.`);
+                console.error(`Port:${process.env.PORT} is already in use`);
                 process.exit(1);
                 break;
             default:
-                throw errors;
+                throw error;        
         }
     })
     .listen(process.env.PORT);

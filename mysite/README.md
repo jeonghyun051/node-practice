@@ -5,10 +5,12 @@ $ npm init -y
 
 ## 설치패키지
 $ npm i express
+$ npm i express-session
 $ npm i ejs
 $ npm i -D nodemon
 $ npm i dotenv
 $ npm i sequelize
+$ npm i mysql2
 
 ## scripts in package.json
 ```JSON
