@@ -7,6 +7,8 @@ $ npm init -y
 $ npm i express
 $ npm i ejs
 $ npm i -D nodemon
+$ npm i dotenv
+$ npm i sequelize
 
 ## scripts in package.json
 ```JSON
