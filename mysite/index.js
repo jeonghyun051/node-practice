@@ -40,7 +40,16 @@ const application = express()
     .use('/', mainRouter)
     .use('/user', userRouter)
     .use('/guestbook', guestbookRouter)
-    .use((req, res) => res.render('error/404'));
+    // 404 error
+    .use((req, res) => res.status(404).render('error/404')) // 응답은 404
+    // 500 error
+    .use(function(err, req, res, next){
+        // logging 
+        logger.error(err.stack);
+        // 사과 페이지
+        res.status(500).send(`<pre>${err.stack}</pre>`); // statck 내용을 보냄, <pre>:내용 그대로 보여줘라. 
+        //res.status(500).render('error/500'); // 500 페이지를 보냄
+    });
 
 
 
