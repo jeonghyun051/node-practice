@@ -11,7 +11,9 @@ $ npm i -D nodemon
 $ npm i dotenv
 $ npm i sequelize
 $ npm i mysql2
-& npm i moment
+& npm i moment                      // date format
+& npm i winston                     // logging
+& npm i winston-daily-rotate-file   // logging
 
 ## scripts in package.json
 ```JSON
@@ -30,6 +32,8 @@ $ npm i mysql2
     |--- pacage-lock.json
     |--- /node-modules
     |--- /config
+    |--- /logging
+    |--- /logs
     |--- /public
     |--- /routes
     |--- /controllers
