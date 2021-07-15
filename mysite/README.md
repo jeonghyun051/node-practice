@@ -11,6 +11,7 @@ $ npm i -D nodemon
 $ npm i dotenv
 $ npm i sequelize
 $ npm i mysql2
+& npm i moment
 
 ## scripts in package.json
 ```JSON

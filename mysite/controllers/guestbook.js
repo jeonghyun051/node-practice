@@ -1,6 +1,5 @@
 const models = require('../models');
-const { param } = require('../routes/guestbook');
-
+const moment = require('moment');
 module.exports = {
     index: async function(req, res) {
         const results = await models.Guestbook.findAll({
@@ -9,7 +8,8 @@ module.exports = {
             ]}
         );
         res.render('guestbook/list',{
-            list: results || []
+            list: results || [],
+            moment: moment
         });
     },
     delete: async function(req, res){
