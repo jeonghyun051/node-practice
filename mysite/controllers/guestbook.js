@@ -26,13 +26,12 @@ module.exports = {
         });
         res.redirect('/guestbook');
     },
-    add: async function(req, res){
-        const result = await models.Guestbook.create({
-            name: req.body.name,
-            password: req.body.password,
-            message: req.body.content,
-            reg_date: new Date()
-        });
-        res.redirect('/guestbook');
+    add: async function(req, res, next) {
+        try {        
+            await models.Guestbook.create(req.body);
+            res.redirect('/guestbook');
+        } catch(e) {
+            next(e);
+        }        
     }
 }
