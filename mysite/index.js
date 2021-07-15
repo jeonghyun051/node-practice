@@ -11,6 +11,7 @@ dotenv.config({path: path.join(__dirname, 'config/db.env')});
 const mainRouter = require('./routes/main');
 const userRouter = require('./routes/user');
 const guestbookRouter = require('./routes/guestbook');
+const errorRouter = require('./routes/error');
 
 const logger = require('./logging');
 
@@ -41,15 +42,9 @@ const application = express()
     .use('/user', userRouter)
     .use('/guestbook', guestbookRouter)
     // 404 error
-    .use((req, res) => res.status(404).render('error/404')) // 응답은 404
+    .use(errorRouter.error404) // 응답은 404
     // 500 error
-    .use(function(err, req, res, next){
-        // logging 
-        logger.error(err.stack);
-        // 사과 페이지
-        res.status(500).send(`<pre>${err.stack}</pre>`); // statck 내용을 보냄, <pre>:내용 그대로 보여줘라. 
-        //res.status(500).render('error/500'); // 500 페이지를 보냄
-    });
+    .use(errorRouter.error500);
 
 
 
