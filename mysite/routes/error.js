@@ -1,4 +1,4 @@
-const logger = require('./logging');
+const logger = require('../logging');
 
 module.exports = {
     error404: (req, res) => res.status(404).render('error/404'),

@@ -12,6 +12,7 @@ const mainRouter = require('./routes/main');
 const userRouter = require('./routes/user');
 const guestbookRouter = require('./routes/guestbook');
 const errorRouter = require('./routes/error');
+const userApiRouter = require('./routes/user-api');
 
 const logger = require('./logging');
 
@@ -40,13 +41,13 @@ const application = express()
     })
     .use('/', mainRouter)
     .use('/user', userRouter)
+    .use('/api/user', userApiRouter) 
     .use('/guestbook', guestbookRouter)
+
     // 404 error
     .use(errorRouter.error404) // 응답은 404
     // 500 error
     .use(errorRouter.error500);
-
-
 
 // Server Setup    
 http.createServer(application)

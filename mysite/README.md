@@ -12,9 +12,9 @@ $ npm i -D nodemon
 $ npm i dotenv
 $ npm i sequelize
 $ npm i mysql2
-& npm i moment                      // date format
-& npm i winston                     // logging
-& npm i winston-daily-rotate-file   // logging
+$ npm i moment                      // date format
+$ npm i winston                     // logging
+$ npm i winston-daily-rotate-file   // logging
 ```
 
 ## scripts in package.json
