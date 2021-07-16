@@ -18,7 +18,7 @@ module.exports = {
         logger.error(err.stack);
 
         // 응답
-        if(res.accepts('html')){    
+        if(req.accepts('html')){    
             res.status(500).send(`<pre>${err.stack}</pre>`); // statck 내용을 보냄, <pre>:내용 그대로 보여줘라. 
             //res.status(500).render('error/500'); // 500 페이지를 보냄
             return;
