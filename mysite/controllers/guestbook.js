@@ -25,7 +25,7 @@ module.exports = {
             }
         });
         res.redirect('/guestbook');
-    },
+    }, 
     add: async function(req, res, next) {
         try {        
             await models.Guestbook.create(req.body);
@@ -33,5 +33,8 @@ module.exports = {
         } catch(e) {
             next(e);
         }        
+    },
+    spa: function(req, res){
+        res.render('guestbook/spa-landing'); 
     }
 }
