@@ -4,6 +4,7 @@ const http = require('http');
 const multer = require('multer');
 const path = require('path');
 const dotenv = require('dotenv');
+const authorized = require('./routes/authorized');
 
 // Environment Variables(환경변수)
 dotenv.config({path: path.join(__dirname, 'config/app.env')});
@@ -16,6 +17,7 @@ const galleryRouter = require('./routes/gallery');
 const userApiRouter = require('./routes/user-api');
 const guestbookApiRouter = require('./routes/guestbook-api');
 const errorRouter = require('./routes/error');
+const adminRouter = require('./routes/admin')
 
 // Logging
 const logger = require('./logging');
@@ -52,6 +54,7 @@ const application = express()
     .use('/gallery', galleryRouter)
     .use('/api/user', userApiRouter)
     .use('/api/guestbook', guestbookApiRouter)
+    .use('/admin', authorized('ADMIN') ,adminRouter)
     .use(errorRouter.error404)
     .use(errorRouter.error500);
 
