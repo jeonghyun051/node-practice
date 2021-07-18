@@ -39,7 +39,7 @@ module.exports = {
             },{ where: {}
         });
 
-            res.render('admin/main');
+            res.redirect('/admin');
         } catch(err) {
             next(err);
         }   
