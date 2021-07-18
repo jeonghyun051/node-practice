@@ -20,25 +20,27 @@ module.exports = {
     update: async function(req, res, next){
         try{
             const file = req.file;
+            let url = null;
 
-            const storeDirectory = path.join(path.dirname(require.main.filename), process.env.STATIC_RESOURCES_DIRECTORY, process.env.MAIN_STORE_LOCATION);
+            if(file){
+                const storeDirectory = path.join(path.dirname(require.main.filename), process.env.STATIC_RESOURCES_DIRECTORY, process.env.MAIN_STORE_LOCATION);
+                const storePath = path.join(storeDirectory, file.filename) + path.extname(file.originalname);
+                url = path.join(process.env.MAIN_STORE_LOCATION, file.filename) + path.extname(file.originalname);
+ 
+                fs.existsSync(storeDirectory) || fs.mkdirSync(storeDirectory);
+                const content = fs.readFileSync(file.path);
+                fs.writeFileSync(storePath, content, {flag: 'w+'});    
+            }
             
-            const url = path.join(process.env.MAIN_STORE_LOCATION, file.filename) + path.extname(file.originalname);
-
-            const storePath = path.join(storeDirectory, file.filename) + path.extname(file.originalname)
-
-            fs.existsSync(storeDirectory) || fs.mkdirSync(storeDirectory);
-            const content = fs.readFileSync(file.path);
-            fs.writeFileSync(storePath, content, {flag: 'w+'});
-
-            await models.Site.update({
-               title: req.body.title,
-               welcome: req.body.welcome,
-               profile: url.replace(/\\/gi, '/'),
-               decription: req.body.decription || ''
-            },{ where: {}
-        });
-
+            await models.Site.update(Object.assign(
+                {
+                    title: req.body.title,
+                    welcome: req.body.welcome,
+                    decription: req.body.decription || ''
+                 },
+                     url ? { profile: url.replace(/\\/gi, '/'), } : null),
+                { where: {} }
+            );
             res.redirect('/admin');
         } catch(err) {
             next(err);
