@@ -16,7 +16,8 @@ $ npm i multer                      // 파일 업로드
 $ npm i moment                      // date format
 $ npm i winston                     // logging
 $ npm i winston-daily-rotate-file   // logging
-
+$ npm i chai                        // test
+$ npm i -D mocha
 ```
 
 ## scripts in package.json

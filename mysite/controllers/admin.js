@@ -41,6 +41,8 @@ module.exports = {
                      url ? { profile: url.replace(/\\/gi, '/'), } : null),
                 { where: {} }
             );
+
+            req.app.siteTitle = req.body.title
             res.redirect('/admin');
         } catch(err) {
             next(err);
