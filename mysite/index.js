@@ -18,6 +18,7 @@ const userApiRouter = require('./routes/user-api');
 const guestbookApiRouter = require('./routes/guestbook-api');
 const errorRouter = require('./routes/error');
 const adminRouter = require('./routes/admin')
+const boardRouter = require('./routes/board');
 
 // Logging
 const logger = require('./logging');
@@ -55,6 +56,7 @@ const application = express()
     .use('/api/user', userApiRouter)
     .use('/api/guestbook', guestbookApiRouter)
     .use('/admin', authorized('ADMIN') ,adminRouter)
+    .use('/board',boardRouter)
     .use(errorRouter.error404)
     .use(errorRouter.error500);
 
