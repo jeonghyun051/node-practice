@@ -8,7 +8,7 @@ describe('Model User', function() {
     before(async function() {
         models = require('../models');
     });
-    it('Test!!!!!', async function() {
+    it('Fetch()', async function() {
         const user = await models.User.findOne({
             where: {
                 no: 1
