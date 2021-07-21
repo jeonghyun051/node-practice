@@ -35,11 +35,24 @@ module.exports = {
     write: function(req, res){
         res.render('board/write',{
             boardNo: req.params.boardNo,
-            groupNo: req.paras.groupNo
+            groupNo: req.params.groupNo
         });
     },
-    _write: async function(req, res){
+    _write: async function(req, res, next){
         try {        
+            const boardNo = req.params.boardNo;
+            const groupNo = req.params.groupNo;
+            const maxGroupNo = await models.Board.max('groupNo');
+            if(boardNo == 0){
+                await models.Board.create(Object.assign(req.body,
+                    {
+                        groupNo: maxGroupNo+1,
+                        userNo: req.session.authUser.no,
+                        depth:0, 
+                        hit:0
+                    })
+                ); 
+            }
             // await models.Board.create(req.body);
             res.redirect('/board/0');
         } catch(e) {
